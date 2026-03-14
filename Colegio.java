@@ -5,126 +5,144 @@
 package colegio;
 
 import colegio.modelo.Estudiante;
+import colegio.modelo.Materia;
 import java.util.ArrayList;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
 
 /**
  *
- * @author UIS
+ * @author asus
  */
 public class Colegio {
-
-    /**
-     * @param args the command line arguments
-     */
+static ArrayList<Estudiante> estudiantes= new ArrayList<>();
+static Scanner sc = new Scanner(System.in);
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
         ArrayList<Estudiante> estudiantes= new ArrayList<>();
         
-        while (true) {
-            System.out.print("    MENU\n"+"1.REGISTRAR ESTUDIANTE\n"+"2. REGISTRAR MATERIAS\n"+"3. REGISTRAR NOTAS "+"4.MOSTRAR LISTA DE ESTUDIANTES\n"+"5.MOSTRAR PROMEDIO POR MATERIA\n"+"6.SALIR");
+        while (true) {            
+            
+            System.out.println("      MENU\n"+"1. REGISTRAR ESTUDIANTE\n"+"2. REGISTRAR MATERIA\n"+"3. REGISTRAR NOTA\n"+"4. LISTAR\n"+"5.PROMEDIO DE ESTUDIANTE\n"+"6. SALIR");
             int menu = sc.nextInt();
+            sc.nextLine();
             
             switch (menu) {
                 case 1:
-                    resgistrarEstudiante(estudiantes);
+                    registrarE(estudiantes);
                     
                     break;
                 case 2:
-                    resgistrarMaterias(estudiantes);
-                    
+                    registrarM(estudiantes);
                     break;
                 case 3:
-                    resgistrarNotas();
-                    
+                    registrarN(estudiantes);
                     break;
                 case 4:
-                    mostrarListas(estudiantes);
-                    
+                    listar(estudiantes);
                     break;
                 case 5:
-                    mostrarPromedio();
-                    
+                    promedio(estudiantes);
                     break;
                 case 6:
                     System.exit(0);
-                    
                     break;
+      
             }
-            
-        }
-    }
-    public static void resgistrarEstudiante(ArrayList<Estudiante> estudiantes) {
-        Scanner est = new Scanner(System.in);
-        System.out.println("Ingrese el ID del estudiante: ");
-        int id = est.nextInt();
-        System.out.println("Ingrese el nombre: ");
-        String nombre = est.nextLine();
-        System.out.println("Ingrese la direccion: ");
-        String direccion = est.nextLine();
-        System.out.println("Ingrese el telefono: ");
-        String telefono = est.nextLine();
-        Estudiante estudiante1 = new Estudiante(id, nombre, direccion, telefono);
         
-        estudiantes.add(estudiante1);
-        
-        
-    }
-    public static void resgistrarMaterias(ArrayList<Estudiante> estudiantes){
-        Scanner mat =new Scanner(System.in);
-        System.out.println("Ingrese el ID del estudiante: ");
-        int id = mat.nextInt();
-        boolean encontrado = false;
-        
-        for (Estudiante es : estudiantes) {
-            if (es.id==id){
-                System.out.println("Ingrese el id de la materia: ");
-                int idm = mat.nextInt();
-                System.out.print("Ingrese la materia: ");
-                String nombreMateri = mat.nextLine();
-                System.out.println("Ingrese los creditos de la materia: ");
-                int cre = mat.nextInt();
-                
-                
-                
-            }
-            
         }
         
-    }
-    public static void resgistrarNotas(){
-        
-    }
-    public static void mostrarListas(ArrayList<Estudiante> estudiantes){
-        for (Estudiante e : estudiantes) {
-            System.out.println("    FICHA\n"
-                    + "ID: "+e.id+"\n"
-                    + "NOMBRE: "+e.nombre+"\n"
-                    + "DIRECCION: "+e.direccion+"\n"
-                    + "TELEFONO:"+e.telefono);
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-        }
-    } 
-    public static void mostrarPromedio(){
-        
-    } 
     
+    }
+    public static void registrarE(ArrayList<Estudiante>estudiantes) {
+        System.out.println("Ingrese el Id: "); 
+        int id = sc.nextInt();
+        System.out.println("Ingrese el nombre: ");
+        String nombre = sc.nextLine();
+        String nombree = sc.nextLine();
+        System.out.println("Ingrese su direccion: ");
+        String direccion =sc.nextLine();
+        System.out.println("Ingrese el telefono: ");
+        String telefono =sc.nextLine();
+        Estudiante estudiante1 =new Estudiante(id, nombree, direccion, telefono);
+        estudiantes.add(estudiante1);
+        System.out.println("Estudiante registrado correctamente");
+        
+    }
+    public static void registrarM(ArrayList<Estudiante>estudiantes) {
+        System.out.print("Ingrese ID del estudiante: ");
+        int id = sc.nextInt();
+        for (Estudiante e : estudiantes) {
+            if (e.id==id){
+                System.out.println("Ingrese el ID de la materia: ");
+                int idm = sc.nextInt();
+                System.out.println("Estudiante encontrado: "+id);
+                System.out.print("Nombre de materia: "); 
+                String nombre = sc.nextLine();
+                String nombre1 = sc.nextLine();
+                System.out.print("Ingrese creditos: "); 
+                String credito = sc.nextLine();
+                Materia materia1 = new Materia(idm, nombre1, credito);
+                e.materias.add(materia1);
+                System.out.println("Materia asignada para: "+nombre1);
+               
+                break;
+            }else{
+                System.out.println("No se encontro el estudiante"); 
+            }
+        }
+    }
+    public static void registrarN(ArrayList<Estudiante>estudiantes){
+        System.out.print("Ingrese ID del estudiante: ");
+        int id = sc.nextInt();
+        for (Estudiante e : estudiantes) {
+            if (e.id==id){
+                System.out.print("Ingrese ID de la materia: ");
+                int idm = sc.nextInt();
+                for (Materia m : e.materias) {
+                    if (m.idm == idm){
+                        System.out.println("Ingrese la nota de la materia: ");
+                        float n1 = sc.nextFloat();
+                        m.notas.add(n1);
+                    }else{
+                        System.out.println("Materia no encontrada");
+                    }
+                }  
+            }else{
+                System.out.println("El estudiante no fue encontrado");
+            }
+        
+        }
+    }
+    public static void promedio(ArrayList<Estudiante>estudiantes) {
+        System.out.print("Ingrese ID del estudiante: ");
+        int id = sc.nextInt();
+        for (Estudiante e : estudiantes) {
+            if (e.id==id){
+               float suma = 0;
+               int cantidadn =0;
+                for (Materia m : e.materias) {
+                    for (Float nota : m.notas) {
+                        suma+=nota;
+                        cantidadn++;
+                    } 
+                }
+                if (cantidadn>0){
+                    float promediof= suma/cantidadn;
+                    System.out.println("el promedio general de "+e.nombre+" es de: "+promediof);
+                }else{
+                    System.out.println("El estudiante no tiene notas registradas");
+                }
+            }
+        }
+    }
+    public static void listar(ArrayList<Estudiante>estudiantes) {
+        for (Estudiante e : estudiantes) {
+            System.out.println("    FICHA \n"
+                    +"ID: "+e.id
+                    +"\n"+"NOMBRE: "+e.nombre
+                    +"\n"+"DIRECCION: "+e.direccion
+                    +"\n"+"TELEFONO: "+e.telefono
+                    +"\n"+"MATERIA: "+e.materias);
+        }
+    }
 }
